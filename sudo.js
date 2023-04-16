@@ -23,7 +23,7 @@ window.onload=function(){
 
 
 function establecerBoton(){
-    var boton = document.getElementById("resuelve");
+    var boton = document.getElementById("resuelveB");
     boton.addEventListener('click', resolver);
 
 }
