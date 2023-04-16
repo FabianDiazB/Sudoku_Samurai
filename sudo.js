@@ -131,7 +131,12 @@ function aleatorios(){
         var fR = parseInt(Math.random() * (9 - 0) + 0);
         var cR = parseInt(Math.random() * (9 - 0) + 0);
         var nR = parseInt(Math.random() * (9 - 0) + 1);
-        sudoku[fR][cR].value=nR;
+        if(valido(nR,fR,cR)){
+            sudoku[fR][cR].value=nR;
+        }else{
+            i-=1;
+        }
+        
          
     }
 }
@@ -155,7 +160,4 @@ function agregarSudoku(){
 
 
 
-
-    //recorrer las celdas
-   
 
