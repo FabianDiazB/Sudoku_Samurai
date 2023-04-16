@@ -66,7 +66,7 @@ function establecerBoton(){
 
 
 function resolverA() {
-    // Definir los valores válidos para cada celda
+    // Definir los valores válidos para cada celda 
     const validos = '123456789';
   
     // Definir una función auxiliar para encontrar la próxima celda vacía
