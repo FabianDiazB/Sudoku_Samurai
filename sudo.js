@@ -23,8 +23,11 @@ window.onload=function(){
 
 
 function establecerBoton(){
-    var boton = document.getElementById("resuelveB");
-    boton.addEventListener('click', resolver);
+    var botonB = document.getElementById("resuelveB");
+    botonB.addEventListener('click', resolverBack);
+
+    var botonA = document.getElementById("resuelveA");
+    botonA.addEventListener('click', resolverA);
 
 }
 
@@ -78,7 +81,14 @@ function obtenerSubcuadricula(i, j) {
 
 
 
-function resolver(){
+function resolverA() {
+        
+    }
+
+
+
+
+function resolverBack(){
 
     for(let i=0;i<9;i++){
   
@@ -88,7 +98,7 @@ function resolver(){
                 for(let k=1;k<10;k++){
                     if(valido(k,i,j)){
                         sudoku[i][j].value = k;
-                        if(resolver(sudoku)){
+                        if(resolverBack(sudoku)){
                             return true;
                         }else{
                             sudoku[i][j].value = null;
