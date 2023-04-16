@@ -45,14 +45,37 @@ function obtenerSubcuadricula(i, j) {
     return subcuadricula;
   }
 
-function valido(sudoku, n, i, j) {
-    let fila = sudoku[i];
-    let col = sudoku.map(row => row[j]);
-    let bloque = obtenerSubcuadricula(i,j)
-    
-    return !fila.includes(n) && !col.includes(n) && !bloque.includes(n);
-   
-  }
+
+
+  function valido(num, row, col) {
+    // Verifica la fila
+    console.log("Vamos a verificar que el #",num, " no este en la fila ",row);
+    for (let i = 0; i < 9; i++) {
+        if (sudoku[row][i].value == num) {
+            console.log("no se puede, ya hay un ",sudoku[row][i].value );
+            return false;
+        }
+    }
+    // Verifica la columna
+    for (let i = 0; i < 9; i++) {
+        if (sudoku[i][col].value == num) {
+            return false;
+        }
+    }
+    // Verifica el cuadrante de 3x3
+    const filaIni = Math.floor(row / 3) * 3;
+    const columIni = Math.floor(col / 3) * 3;
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (sudoku[filaIni + i][columIni + j].value == num) {
+                return false;
+            }
+        }
+    }
+    // Si el número puede colocarse en la posición, es válido
+    return true;
+}
+
 
 
 function resolver(){
@@ -63,7 +86,7 @@ function resolver(){
 
             if(sudoku[i][j].value==0){
                 for(let k=1;k<10;k++){
-                    if(valido(sudoku,k,i,j)){
+                    if(valido(k,i,j)){
                         sudoku[i][j].value = k;
                         if(resolver(sudoku)){
                             return true;
@@ -77,11 +100,12 @@ function resolver(){
 
 
         }
+
     }
+    
     return true;
 
-    //recorrer las celdas
-   
+
 
 }
 
@@ -125,6 +149,8 @@ function agregarSudoku(){
     aleatorios()
     
 }
+
+
 
 
 
