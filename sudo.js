@@ -31,31 +31,15 @@ function establecerBoton(){
 
 }
 
-function obtenerSubcuadricula(i, j) {
-    const subcuadricula = [];
-  
-    // Obtener los índices de la esquina superior izquierda de la subcuadrícula
-    const inicioFila = Math.floor(i / 3) * 3;
-    const inicioCol = Math.floor(j / 3) * 3;
-  
-    // Recorrer la subcuadrícula de 3x3 y agregar los elementos al arreglo
-    for (let fila = inicioFila; fila < inicioFila + 3; fila++) {
-      for (let col = inicioCol; col < inicioCol + 3; col++) {
-        subcuadricula.push(sudoku[fila][col]);
-      }
-    }
-  
-    return subcuadricula;
-  }
 
 
 
-  function valido(num, row, col) {
+  function valido(num, fil, col) {
     // Verifica la fila
-    //console.log("Vamos a verificar que el #",num, " no este en la fila ",row);
+    //console.log("Vamos a verificar que el #",num, " no este en la fila ",fil);
     for (let i = 0; i < 9; i++) {
-        if (sudoku[row][i].value == num) {
-            //console.log("no se puede, ya hay un ",sudoku[row][i].value );
+        if (sudoku[fil][i].value == num) {
+            //console.log("no se puede, ya hay un ",sudoku[fil][i].value );
             return false;
         }
     }
@@ -66,7 +50,7 @@ function obtenerSubcuadricula(i, j) {
         }
     }
     // Verifica el cuadrante de 3x3
-    const filaIni = Math.floor(row / 3) * 3;
+    const filaIni = Math.floor(fil / 3) * 3;
     const columIni = Math.floor(col / 3) * 3;
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
@@ -82,8 +66,55 @@ function obtenerSubcuadricula(i, j) {
 
 
 function resolverA() {
-        
+    // Definir los valores válidos para cada celda
+    const validos = '123456789';
+  
+    // Definir una función auxiliar para encontrar la próxima celda vacía
+    function casillaVacia() {
+      for (let fil = 0; fil < 9; fil++) {
+        for (let col = 0; col < 9; col++) {
+          if (sudoku[fil][col].value == 0) {
+            return [fil, col];
+          }
+        }
+      }
+      return null;
     }
+  
+    
+  
+    // Definir una función para realizar la búsqueda
+    function busqueda() {
+      // Encontrar la próxima celda vacía
+      const siguiente = casillaVacia();
+      // Si no hay más celdas vacías, se resolvió el sudoku
+      if (!siguiente) {
+        return true;
+      }
+      const [fil, col] = siguiente;
+      // Probar cada valor válido para la celda
+      for (let i = 0; i < validos.length; i++) {
+        const value = validos[i];
+        if (valido( value,fil, col)) {
+          // Asignar el valor a la celda
+          sudoku[fil][col].value = value;
+          // Realizar la búsqueda recursiva
+          if (busqueda()) {
+            return true;
+          }
+          // Si no se encontró solución, revertir la asignación
+          sudoku[fil][col].value = null;
+        }
+      }
+      // Si no se encontró solución con ningún valor, retroceder
+      return false;
+    }
+  
+    // Llamar a la función de búsqueda y devolver el resultado
+    return busqueda();
+  }
+  
+ 
 
 
 
