@@ -54,6 +54,7 @@ function valido(sudoku, n, i, j) {
    
   }
 
+
 function resolver(){
 
     for(let i=0;i<9;i++){
@@ -85,7 +86,6 @@ function resolver(){
 }
 
 
-
 function crearTablero(){
     for(let i=0;i<9;i++){
         for(let j=0;j<9;j++){
@@ -104,11 +104,11 @@ function crearTablero(){
 function aleatorios(){
     
     for(let i=0;i<7;i++){ 
-        var fR = parseInt(Math.random() * (8 - 0) + 0);
-        var cR = parseInt(Math.random() * (8 - 0) + 0);
-        var nR = parseInt(Math.random() * (8 - 0) + 0);
+        var fR = parseInt(Math.random() * (9 - 0) + 0);
+        var cR = parseInt(Math.random() * (9 - 0) + 0);
+        var nR = parseInt(Math.random() * (9 - 0) + 1);
         sudoku[fR][cR].value=nR;
-        
+         
     }
 }
 
@@ -129,10 +129,6 @@ function agregarSudoku(){
 
 
 
-
-
-
-    
 
     //recorrer las celdas
    
