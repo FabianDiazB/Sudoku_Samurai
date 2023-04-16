@@ -49,10 +49,10 @@ function obtenerSubcuadricula(i, j) {
 
   function valido(num, row, col) {
     // Verifica la fila
-    console.log("Vamos a verificar que el #",num, " no este en la fila ",row);
+    //console.log("Vamos a verificar que el #",num, " no este en la fila ",row);
     for (let i = 0; i < 9; i++) {
         if (sudoku[row][i].value == num) {
-            console.log("no se puede, ya hay un ",sudoku[row][i].value );
+            //console.log("no se puede, ya hay un ",sudoku[row][i].value );
             return false;
         }
     }
