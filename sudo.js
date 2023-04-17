@@ -16,17 +16,15 @@ var sudoku =
 
 window.onload=function(){
     crearTablero();
-    console.log("llega antes de addlisteners");
     establecerBoton();
 
 }
 
 function establecerBoton(){
-    console.log("botonG");
+
     var botonG = document.getElementById("generar");
     botonG.addEventListener("click", gen);
 
-console.log("deberia haber creado el generar");
     var botonB = document.getElementById("resuelveB");
     botonB.addEventListener("click", resolverBack);
 
@@ -53,7 +51,7 @@ function gen(){
 function limpiar(){
     for (let i = 0; i<9;i++){
         for(let j = 0; j<9;j++){
-            sudoku[i][j]=0;
+            sudoku[i][j].value=null;
         }
     }
 }
