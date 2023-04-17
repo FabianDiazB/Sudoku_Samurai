@@ -193,7 +193,7 @@ function crearTablero(){
 
 function aleatorios(){
     
-    for(let i=0;i<15;i++){ 
+    for(let i=0;i<12;i++){ 
         var fR = parseInt(Math.random() * (9 - 0) + 0);
         var cR = parseInt(Math.random() * (9 - 0) + 0);
         var nR = parseInt(Math.random() * (9 - 0) + 1);
