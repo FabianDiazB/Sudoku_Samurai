@@ -16,23 +16,43 @@ var sudoku =
 
 window.onload=function(){
     crearTablero()
-    establecerBoton()
-}
-
-
-
-
-function establecerBoton(){
+    console.log("llega antes de addlisteners");
+document.addEventListener("DOMContentLoaded", function establecerBoton(){
+    var botonG = document.getElementById("generar");
+    botonG.addEventListener("click", gen);
+console.log("deberia haber creado el generar");
     var botonB = document.getElementById("resuelveB");
-    botonB.addEventListener('click', resolverBack);
+    botonB.addEventListener("click", resolverBack);
 
     var botonA = document.getElementById("resuelveA");
-    botonA.addEventListener('click', resolverA);
+    botonA.addEventListener("click", resolverA);
 
+    var botonBstep = document.getElementById("resuelveB_step");
+    botonBstep.addEventListener("click", resolverBack);
+    
+    var botonAstep = document.getElementById("resuelveA_step");
+    botonAstep.addEventListener("click", resolverA);
+    
+    var botonL = document.getElementById("limpiar");
+    botonL.addEventListener("click", limpiar);
+
+});
 }
 
 
 
+function gen(){
+    limpiar()
+    aleatorios()
+}
+
+function limpiar(){
+    for (let i = 0; i<9;i++){
+        for(let j = 0; j<9;j++){
+            sudoku[i][j]=0;
+        }
+    }
+}
 
   function valido(num, fil, col) {
     // Verifica la fila
@@ -168,17 +188,14 @@ function crearTablero(){
 
 function aleatorios(){
     
-    for(let i=0;i<7;i++){ 
+    for(let i=0;i<29;i++){ 
         var fR = parseInt(Math.random() * (9 - 0) + 0);
         var cR = parseInt(Math.random() * (9 - 0) + 0);
         var nR = parseInt(Math.random() * (9 - 0) + 1);
         if(valido(nR,fR,cR)){
             sudoku[fR][cR].value=nR;
-        }else{
-            i-=1;
-        }
+        }else{i--}
         
-         
     }
 }
 

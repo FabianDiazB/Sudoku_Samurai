@@ -1,6 +1,5 @@
 .background-image{
   background-image: url("background.jpg");;
- 
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -8,17 +7,13 @@
 }
 
 body{
- 
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
-  
 }
 
 hr{
   width: 500px;
 }
-
-
 
 #tablero{
   width: 509px;
@@ -30,26 +25,34 @@ hr{
   
 }
 
-.celda{
+.celda {
   width: 48px;
   height: 48px;
   margin: 1px;
-  border: 1px solid black;
-  
-  font-size:20px;
+  border: 1px solid rgb(243, 236, 236);
+  font-size: 20px;
   font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: grey;
-
+  color: #d06c94; /* set a bright color inspired by traditional Japanese art */
+  background-color: #fff5ee; /* add a light color to mimic washi paper */
+  box-shadow: 0px 0px 5px #888888; /* add a subtle shadow effect */
+  border-radius: 10%; /* add a curved edge to mimic Japanese calligraphy */
+  font-family: 'Hiragino Kaku Gothic ProN', sans-serif; /* use a Japanese-inspired font */
+  letter-spacing: 1px; /* add extra space between letters to mimic calligraphy */
+  text-shadow: 1px 1px 0 #888888; /* add a subtle shadow effect to the text */
+  background-image: url('ink_plain.jpg'); /* add a traditional Japanese pattern */
+  background-repeat: no-repeat; /* repeat the pattern */
+  background-size: auto;
 }
 
-#resuelveB {
-  border: 1px solid #2e518b; /*anchura, estilo y color borde*/
+
+#generar{
+  border: 1px solid #ffffff; /*anchura, estilo y color borde*/
   padding: 10px; /*espacio alrededor texto*/
-  background-color: #2e518b; /*color botón*/
+  background-color: #4b0040; /*color botón*/
   color: #ffffff; /*color texto*/
   text-decoration: none; /*decoración texto*/
   text-transform: uppercase; /*capitalización texto*/
@@ -57,10 +60,22 @@ hr{
   border-radius: 50px; /*bordes redondos*/
   }
 
+  #resuelveB {
+    border: 1px solid #2e518b; /*anchura, estilo y color borde*/
+    padding: 10px; /*espacio alrededor texto*/
+    background-color: #1e4d98; /*color botón*/
+    color: #ffffff; /*color texto*/
+    text-decoration: none; /*decoración texto*/
+    text-transform: uppercase; /*capitalización texto*/
+    font-family: 'Helvetica', sans-serif; /*tipografía texto*/
+    border-radius: 50px; /*bordes redondos*/
+    }
+
+
 #resuelveA {
   border: 1px solid #2e518b; /*anchura, estilo y color borde*/
   padding: 10px; /*espacio alrededor texto*/
-  background-color: #b0249b; /*color botón*/
+  background-color: #9c228a; /*color botón*/
   color: #ffffff; /*color texto*/
   text-decoration: none; /*decoración texto*/
   text-transform: uppercase; /*capitalización texto*/
@@ -82,13 +97,23 @@ hr{
 #resuelveA_step {
   border: 1px solid #2e518b; /*anchura, estilo y color borde*/
   padding: 10px; /*espacio alrededor texto*/
-  background-color: #3c0233; /*color botón*/
+  background-color: #740463; /*color botón*/
   color: #ffffff; /*color texto*/
   text-decoration: none; /*decoración texto*/
   text-transform: uppercase; /*capitalización texto*/
   font-family: 'Helvetica', sans-serif; /*tipografía texto*/
   border-radius: 50px; /*bordes redondos*/
   }
+  #limpiar {
+    border: 1px solid #ffffff; /*anchura, estilo y color borde*/
+    padding: 10px; /*espacio alrededor texto*/
+    background-color: #00bdd6; /*color botón*/
+    color: #ffffff; /*color texto*/
+    text-decoration: none; /*decoración texto*/
+    text-transform: uppercase; /*capitalización texto*/
+    font-family: 'Helvetica', sans-serif; /*tipografía texto*/
+    border-radius: 50px; /*bordes redondos*/
+    }
 
 input{
   outline: none;
@@ -96,7 +121,7 @@ input{
 }
 
 input:focus{
-  color: green ;
+  color: rgb(11, 183, 123) ;
   outline: none;
-  border: 3px solid green;
+  border: 3px solid rgb(23, 201, 148);
 }
