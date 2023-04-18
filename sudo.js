@@ -11,13 +11,58 @@ var sudoku =
 [],
 []
 ]
+var sudokuA=[
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[]
+]
 
+var sudokuB=[
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[]
+]
+
+var sudokuC=[
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[]
+]
+
+var sudokuD=[
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[]
+]
 
 
 window.onload=function(){
     crearTablero();
     establecerBoton();
-
 }
 
 function establecerBoton(){
@@ -49,14 +94,54 @@ function gen(){
 }
 
 function limpiar(){
-    for (let i = 0; i<9;i++){
-        for(let j = 0; j<9;j++){
+    for (let i = 0; i<21;i++){
+        for(let j = 0; j<21;j++){
             sudoku[i][j].value=null;
         }
     }
 }
 
   function valido(num, fil, col) {
+    // Verifica el cuadrante de 3x3
+    const filaIni = Math.floor(fil / 3) * 3;
+    const columIni = Math.floor(col / 3) * 3;
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (sudoku[filaIni + i][columIni + j].value == num) {
+                return false;
+            }
+        }
+    }
+    //cuadrantes compartidos
+    if(fil<9 && col<9){//sudoku A
+        if((fil>5 && col>5)){//3x3 compartido entre A(superior izquierdo) y X(central)
+            
+        }
+        else{
+
+        }
+    }
+    if(fil<9 && col>11){//sudoku B
+        if((fil>5 && col>5)){
+        
+        }else{
+
+        }
+    }
+    if(fil<9 && col<9){//sudoku C
+        if((fil>5 && col>5)){
+        
+        }else{
+        
+        }
+    }
+    if(fil<9 && col>11){//sudoku D
+        if((fil>5 && col>5)){
+        
+        }else{
+        
+        }
+    }
     // Verifica la fila
     //console.log("Vamos a verificar que el #",num, " no este en la fila ",fil);
     for (let i = 0; i < 9; i++) {
@@ -71,41 +156,28 @@ function limpiar(){
             return false;
         }
     }
-    // Verifica el cuadrante de 3x3
-    const filaIni = Math.floor(fil / 3) * 3;
-    const columIni = Math.floor(col / 3) * 3;
-    for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-            if (sudoku[filaIni + i][columIni + j].value == num) {
-                return false;
-            }
-        }
-    }
     // Si el número puede colocarse en la posición, es válido
     return true;
 }
 
-
-
 function resolverA() {
-    console.log("Resolviendo en A*")
     // Definir los valores válidos para cada celda 
     const validos = '123456789';
-  
     // Definir una función auxiliar para encontrar la próxima celda vacía
     function casillaVacia() {
-      for (let fil = 0; fil < 9; fil++) {
-        for (let col = 0; col < 9; col++) {
-          if (sudoku[fil][col].value == 0) {
-            return [fil, col];
-          }
+      for (let fil = 0; fil < 21; fil++) {
+        for (let col = 0; col < 21; col++) {
+            if((j<12 && j>8 && (i<6 || i>14)) || i<12 && i>8 &&(j<6 || j>14)){
+                continue;
+            }else{
+                if (sudoku[fil][col].value == 0) {
+                    return [fil, col];
+                }
+            }
         }
       }
       return null;
     }
-  
-    
-  
     // Definir una función para realizar la búsqueda
     function busqueda() {
       // Encontrar la próxima celda vacía
@@ -132,58 +204,52 @@ function resolverA() {
       // Si no se encontró solución con ningún valor, retroceder
       return false;
     }
-  
     // Llamar a la función de búsqueda y devolver el resultado
     return busqueda();
   }
-  
- 
-
-
-
 
 function resolverBack(){
-    console.log("Resolviendo en sudoku*")
-
-
-    for(let i=0;i<9;i++){
-  
-        for(let j=0;j<9;j++){
-
-            if(sudoku[i][j].value==0){
-                for(let k=1;k<10;k++){
-                    if(valido(k,i,j)){
-                        sudoku[i][j].value = k;
-                        if(resolverBack(sudoku)){
-                            return true;
-                        }else{
-                            sudoku[i][j].value = null;
+    for(let i=0;i<21;i++){
+        for(let j=0;j<21;j++){
+            if((j<12 && j>8 && (i<6 || i>14)) || i<12 && i>8 &&(j<6 || j>14)){
+                continue;
+            }else{
+                if(sudoku[i][j].value==0){
+                    for(let k=1;k<10;k++){
+                        if(valido(k,i,j)){
+                            sudoku[i][j].value = k;
+                            if(resolverBack(sudoku)){
+                                return true;
+                            }else{
+                                sudoku[i][j].value = null;
+                            }
                         }
                     }
+                    return false;
                 }
-                return false;
             }
-
-
         }
-
     }
-    
     return true;
-
-
-
 }
 
 
 function crearTablero(){
-    for(let i=0;i<9;i++){
-        for(let j=0;j<9;j++){
+    for(let i=0;i<21;i++){
+        for(let j=0;j<21;j++){
+            if((j<12 && j>8 && (i<6 || i>14)) || i<12 && i>8 &&(j<6 || j>14)){
+                let espacio = document.createElement("input");
+                espacio.id = i.toString()+"-"+j.toString();
+                espacio.classList.add("espacio");
+                espacio.value=0;
+                document.getElementById("tablero").append(espacio);
+            }else{
             let celda = document.createElement("input");
             celda.id = i.toString() + "-" +j.toString();
             celda.classList.add("celda");
             celda.value=null;
             document.getElementById("tablero").append(celda);
+            }
         }
     }
 
@@ -193,9 +259,30 @@ function crearTablero(){
 
 function aleatorios(){
     
-    for(let i=0;i<12;i++){ 
-        var fR = parseInt(Math.random() * (9 - 0) + 0);
-        var cR = parseInt(Math.random() * (9 - 0) + 0);
+    for(let i=0;i<30;i++){ 
+        var x = parseInt(Math.random()* (5 - 0));
+        switch (x){
+        case 0:
+            var fR = parseInt(Math.random() * (9 - 0));
+            var cR = parseInt(Math.random() * (9 - 0));
+        break;
+        case 1:
+            var fR = parseInt(Math.random() * (9 - 0));
+            var cR = parseInt(Math.random() * (9 - 0) + 12);
+        break;
+        case 2:
+            var fR = parseInt(Math.random() * (9 - 0) + 6);
+            var cR = parseInt(Math.random() * (9 - 0) + 6);
+        break;
+        case 3:
+            var fR = parseInt(Math.random() * (9 - 0) + 12);
+            var cR = parseInt(Math.random() * (9 - 0) + 0);
+        break;
+        case 4:
+            var fR = parseInt(Math.random() * (9 - 0) + 12);
+            var cR = parseInt(Math.random() * (9 - 0) + 12);
+        break;
+        }
         var nR = parseInt(Math.random() * (9 - 0) + 1);
         if(valido(nR,fR,cR)){
             sudoku[fR][cR].value=nR;
@@ -206,16 +293,16 @@ function aleatorios(){
 
 function agregarSudoku(){
     //para añadir las celdas al array sudoku
-    for(let i=0;i<9;i++){
-        for(let j=0;j<9;j++){
+    for(let i=0;i<21;i++){
+        for(let j=0;j<21;j++){
             var ide = i.toString() + "-" +j.toString();
             var celdaA = document.getElementById(ide);
+            console.log(celdaA.toString())
             sudoku[i].push(celdaA);
-         
         }
     }
-    aleatorios()
-    
+   // console.log("anade todo bien")
+    aleatorios()    
 }
 
 
