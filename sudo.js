@@ -1,26 +1,13 @@
-/**
- * Codigo de js para hacer funcional y crear el tablero de sudoku samurai
- * 
- */
-
-
 var dimen = 9
-var sudoku = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]] // esta es la matriz 21x21 para representar los 5 tableros
+var sudoku = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 
 
-window.onload=function(){ 
-    /**
-     * Cuando cargue la ventana, se crea el tablero y los botones
-     */
+window.onload=function(){
     crearTablero();
     establecerBoton();
 }
 
 function establecerBoton(){
-    /**
-     * Esta funcion lo que hace es obtener los botones ya especificados en el html y ponerles el evento addListener para que cada uno
-     * ejecuta su respectiva funcion
-     */
 
     var botonG = document.getElementById("generar");
     botonG.addEventListener("click", gen);
@@ -44,20 +31,14 @@ function establecerBoton(){
 
 
 function gen(){
-    /**
-     * Esta funcion es para el boton Generar, utiliza limpiar y aleatorios para generar un nuevo tablero de manera aleatoria
-     */
     limpiar()
     aleatorios()
 }
 
 function limpiar(){
-    /**
-     * Limpiar recorre las 81 celdas y limpia su contenido, esto para que el tablero quede totalmente limpio
-     */
-    for (let i = 0; i<21;i++){ //2 ciclos para filas y columnas
+    for (let i = 0; i<21;i++){
         for(let j = 0; j<21;j++){
-            if((j<12 && j>8 && (i<6 || i>14)) || i<12 && i>8 &&(j<6 || j>14)){ //casillas desactivadas
+            if((j<12 && j>8 && (i<6 || i>14)) || i<12 && i>8 &&(j<6 || j>14)){
                 continue;
             }else{
             sudoku[i][j].value=null;}
@@ -65,69 +46,76 @@ function limpiar(){
     }
 }
 
-  function valido(num, fil, col) {
-    /**
-     * Funcion corazón que devuelve true o false, dependiendo si se puede insertar un numero en cierta celda, verificando en fila, columna y cuadrante
-     */
-
+function valido(num, fil, col) {
     // Verifica el cuadrante de 3x3
-    const filaIni = Math.floor(fil / 3) * 3; 
+    const filaIni = Math.floor(fil / 3) * 3;
     const columIni = Math.floor(col / 3) * 3;
-
-    for (let i = 0; i < 3; i++) { //esto verifica que el numero no se encuentre ya en el subcuadrante
+    for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
-            if (sudoku[filaIni + i][columIni + j].value == num) { //no seria valido el numero ahi
+            if (sudoku[filaIni + i][columIni + j].value == num) {
                 return false;
             }
         }
     }
-    //cuadrantes compartidos
-    if(fil<9 && col<9){//sudoku A
-        if((fil>5 && col>5)){//3x3 compartido entre (superior izquierdo) y (central)
-            for (let i = 0; i < 9; i++) { //con este for revisamos todas las celdas compartidas con el sudoku de en medio y asi saber si se puede insertar
-                if(sudoku[fil][i+6].value == num ||
-                    sudoku[i+6][col].value == num ||
-                    sudoku[fil][i].value == num || 
-                    sudoku[i][col].value == num){
+
+    if ((fil>5 && fil<15)&&(col>5 && col<15)){
+        for (let i = 0; i < 9; i++) {
+            if(sudoku[fil+6][i].value == num || sudoku[i][col+6].value == num){
                 return false
-                }
             }
         }
-        else{
-            for (let i = 0; i < 9; i++) { 
-                if(sudoku[fil][i].value == num || sudoku[i][col].value == num){
+    }else{
+        //cuadrantes compartidos
+        if(fil<9 && col<9){//sudoku A
+            if((fil>5 && col>5)){//3x3 compartido entre (superior izquierdo) y (central)
+                for (let i = 0; i < 9; i++) {
+                    if(sudoku[fil][i+6].value == num ||
+                        sudoku[i+6][col].value == num ||
+                        sudoku[fil][i].value == num || 
+                        sudoku[i][col].value == num){
                     return false
+                    }
+                }
+            }
+            else{
+                for (let i = 0; i < 9; i++) {
+                    if(sudoku[fil][i].value == num || sudoku[i][col].value == num){
+                        return false
+                    }
                 }
             }
         }
-    }
-    ////////////////////////
-    if(fil<9 && col>11){//sudoku B
-        if((fil>5 && col>5)){
-            for (let i = 0; i < 9; i++) {//con este for revisamos todas las celdas compartidas con el sudoku de en medio y asi saber si se puede insertar
-                if(sudoku[fil][i+12].value == num || 
-                    sudoku[i+6][col].value == num||
-                    sudoku[fil][14-i].value == num || 
-                    sudoku[i][col].value == num){
-                return false
-                }
-            }
-        }
-        else{
-            for (let i = 0; i < 9; i++) {
-                if(sudoku[fil][i+12].value == num || sudoku[i][col].value == num){
+        ////////////////////////
+        if(fil<9 && col>11){//sudoku B
+            if((fil>5 && col<15)){
+                for (let i = 0; i < 9; i++) {
+                    if(sudoku[fil][i+12].value == num || 
+                        sudoku[i+6][col].value == num||
+                        sudoku[fil][14-i].value == num || 
+                        sudoku[i][col].value == num){
                     return false
+                    }
+                }
+            }
+            else{
+                for (let i = 0; i < 9; i++) {
+                    if(sudoku[fil][i+12].value == num || sudoku[i][col].value == num){
+                        return false
+                    }
                 }
             }
         }
-    }
-    if(fil>11 && col<9){//sudoku C
-        for (let i = 0; i < 9; i++) {//con este for revisamos todas las celdas compartidas con el sudoku de en medio y asi saber si se puede insertar
-            if(sudoku[fil][i].value == num || 
-                sudoku[i+12][col].value == num||
-                sudoku[fil][i+6].value == num || 
-                sudoku[14-i][col].value == num){
-            return false
+        /////
+        if(fil>11 && col<9){//sudoku C
+            if((fil>5 && col<15)){
+                for (let i = 0; i < 9; i++) {
+                    if(sudoku[fil][i].value == num || 
+                        sudoku[i+12][col].value == num||
+                        sudoku[fil][i+6].value == num || 
+                        sudoku[14-i][col].value == num){
+                    return false
+                    }
+                }
             }
             else{
                 for (let i = 0; i < 9; i++) {
@@ -137,14 +125,17 @@ function limpiar(){
                 }
             }
         }
-    }
-    if(fil>11 && col>11){//sudoku D
-        for (let i = 0; i < 9; i++) {//con este for revisamos todas las celdas compartidas con el sudoku de en medio y asi saber si se puede insertar
-            if(sudoku[fil][i+12].value == num || 
-                sudoku[i+12][col].value == num||
-                sudoku[fil][14-i].value == num || 
-                sudoku[14-i][col].value == num){
-            return false
+        
+        if(fil>11 && col>11){//sudoku D
+            if((fil>5 && col<15)){
+                for (let i = 0; i < 9; i++) {
+                    if(sudoku[fil][i+12].value == num || 
+                        sudoku[i+12][col].value == num||
+                        sudoku[fil][14-i].value == num || 
+                        sudoku[14-i][col].value == num){
+                        return false
+                    }
+                }
             }
             else{
                 for (let i = 0; i < 9; i++) {
@@ -154,10 +145,11 @@ function limpiar(){
                 }
             }
         }
-    // Si el número puede colocarse en la posición, es válido
-    return true;
+        // Si el número puede colocarse en la posición, es válido
+        return true;
+        }
     }
-}
+
 
 function resolverA() {
     // Definir los valores válidos para cada celda 
@@ -255,10 +247,30 @@ function crearTablero(){
 }
 
 function aleatorios(){      
-    for(let i=0;i<20;i++){ 
-        var x = parseInt(Math.random()* (3 - 0));
-        //var fR = parseInt(Math.random() * (9 - 0)+(6*x));
-        //var cR = parseInt(Math.random() * (9 - 0)+(6*x));
+    for(let i=0;i<40;i++){ 
+        var x = parseInt(Math.random()* (5 - 0));
+        switch (x){
+            case 0:
+                var fR = parseInt(Math.random() * (9 - 0));
+                var cR = parseInt(Math.random() * (9 - 0));
+            break;
+            case 1:
+                var fR = parseInt(Math.random() * (9 - 0));
+                var cR = parseInt(Math.random() * (9 - 0) + 12);
+            break;
+            case 2:
+                var fR = parseInt(Math.random() * (9 - 0) + 6);
+                var cR = parseInt(Math.random() * (9 - 0) + 6);
+            break;
+            case 3:
+                var fR = parseInt(Math.random() * (9 - 0) + 12);
+                var cR = parseInt(Math.random() * (9 - 0) + 0);
+            break;
+            case 4:
+                var fR = parseInt(Math.random() * (9 - 0) + 12);
+                var cR = parseInt(Math.random() * (9 - 0) + 12);
+            break;
+            }
 
         var nR = parseInt(Math.random() * (9 - 0) + 1);
         if(valido(nR,fR,cR)){
