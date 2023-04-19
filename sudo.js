@@ -21,10 +21,10 @@ function establecerBoton(){
     botonA.addEventListener("click", resolverA);
 
     var botonBstep = document.getElementById("resuelveB_step");
-    botonBstep.addEventListener("click", resolverBack);
+    botonBstep.addEventListener("click", resolverB_Step);
     
     var botonAstep = document.getElementById("resuelveA_step");
-    botonAstep.addEventListener("click", resolverA);
+    botonAstep.addEventListener("click", resolverA_Step);
     
     var botonL = document.getElementById("limpiar");
     botonL.addEventListener("click", limpiar);
@@ -163,15 +163,14 @@ function listas(){
         });
     });
 }
-
-function resolverA() {
+function resolverA_Step() {
     // Definir los valores válidos para cada celda 
     const validos = '123456789';
     // Definir una función auxiliar para encontrar la próxima celda vacía
     function casillaVacia() {
       for (let fil = 0; fil < 21; fil++) {
         for (let col = 0; col < 21; col++) {
-            if((col<12 && col>8 && (fil<6 || fil>14)) || fil<12 && fil>8 &&(col<6 || col>14)){
+            if(((col<12 && col>8) && (fil<6 || fil>14)) || (fil<12 && fil>8) &&(col<6 || col>14)){
                 continue;
             }else{
                 if (sudoku[fil][col].value == 0) {
@@ -198,21 +197,79 @@ function resolverA() {
           // Asignar el valor a la celda
           var gDeN = (fil+1)*21 + (col+1);
           var hDeN = (21-fil+1) +(21-col+1);
-          console.log("El coste del nodo ",sudoku[fil][col], " es ",gDeN+hDeN );
+          console.log("El coste del nodo ",sudoku[fil][col].id, " es ",gDeN+hDeN );
+          sudoku[fil][col].value = value;
+          return;
+          // Realizar la búsqueda recursiva
+          if (busqueda()) {
+            return true;
+          }
+          // Si no se encontró solución, revertir la asignación
+          sudoku[fil][col].value = 0;
+        }
+      }
+      listas();
+      // Si no se encontró solución con ningún valor, retroceder
+      return false;
+    }
+    // Llamar a la función de búsqueda y devolver el resultado
+    return busqueda();
+  }
+
+function resolverA() {
+    // Definir los valores válidos para cada celda 
+    const validos = '123456789';
+    // Definir una función auxiliar para encontrar la próxima celda vacía
+    function casillaVacia() {
+      for (let fil = 0; fil < 21; fil++) {
+        for (let col = 0; col < 21; col++) {
+            if(((col<12 && col>8) && (fil<6 || fil>14)) || (fil<12 && fil>8) &&(col<6 || col>14)){
+                continue;
+            }else{
+                if (sudoku[fil][col].value == 0) {
+                    return [fil, col];
+                }
+            }
+        }
+      }
+      return null;
+    }
+    // Definir una función para realizar la búsqueda
+    function busqueda() {
+      // Encontrar la próxima celda vacía
+      const siguiente = casillaVacia();
+      // Si no hay más celdas vacías, se resolvió el sudoku
+      if (!siguiente) {
+        return true;
+      }
+      const [fil, col] = siguiente;
+      // Probar cada valor válido para la celda
+      for (let i = 0; i < validos.length; i++) {
+        const value = validos[i];
+        if (valido( value,fil, col)) {
+          // Asignar el valor a la celda
+          var gDeN = (fil+1)*21 + (col+1);
+          var hDeN = (21-fil+1) +(21-col+1);
+          console.log("El coste del nodo ",sudoku[fil][col].id, " es ",gDeN+hDeN );
           sudoku[fil][col].value = value;
           // Realizar la búsqueda recursiva
           if (busqueda()) {
             return true;
           }
           // Si no se encontró solución, revertir la asignación
-          sudoku[fil][col].value = null;
+          sudoku[fil][col].value = 0;
         }
       }
+      listas();
       // Si no se encontró solución con ningún valor, retroceder
       return false;
     }
     // Llamar a la función de búsqueda y devolver el resultado
     return busqueda();
+  }
+
+  function resolverB_Step(){
+    return;
   }
 
 function resolverBack(){
@@ -304,7 +361,6 @@ function agregarSudoku(){
         for(let j=0;j<21;j++){
             var ide = i.toString() + "-" +j.toString();
             var celdaA = document.getElementById(ide);
-            console.log(celdaA.toString())
             sudoku[i].push(celdaA);
         }
     }
