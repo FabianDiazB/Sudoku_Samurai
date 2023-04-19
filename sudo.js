@@ -124,7 +124,7 @@ function limpiar(){
             }
             else{
                 for (let i = 0; i < 9; i++) {
-                    if(sudoku[fil][i+12].value == num | sudoku[i+12][col].value == num){
+                    if(sudoku[fil][i+12].value == num || sudoku[i+12][col].value == num){
                         return false
                     }
                 }
@@ -142,7 +142,7 @@ function resolverA() {
     function casillaVacia() {
       for (let fil = 0; fil < 21; fil++) {
         for (let col = 0; col < 21; col++) {
-            if((j<12 && j>8 && (i<6 || i>14)) || i<12 && i>8 &&(j<6 || j>14)){
+            if((col<12 && col>8 && (fil<6 || fil>14)) || fil<12 && fil>8 &&(col<6 || col>14)){
                 continue;
             }else{
                 if (sudoku[fil][col].value == 0) {
@@ -233,8 +233,8 @@ function crearTablero(){
 function aleatorios(){      
     for(let i=0;i<20;i++){ 
         var x = parseInt(Math.random()* (3 - 0));
-        var fR = parseInt(Math.random() * (9 - 0)+(6*x));
-        var cR = parseInt(Math.random() * (9 - 0)+(6*x));
+        //var fR = parseInt(Math.random() * (9 - 0)+(6*x));
+        //var cR = parseInt(Math.random() * (9 - 0)+(6*x));
 
         var nR = parseInt(Math.random() * (9 - 0) + 1);
         if(valido(nR,fR,cR)){
