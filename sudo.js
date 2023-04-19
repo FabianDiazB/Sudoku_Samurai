@@ -200,6 +200,7 @@ function resolverA() {
   }
 
 function resolverBack(){
+    console.log("en backtrack");
     for(let i=0;i<21;i++){
         for(let j=0;j<21;j++){
             if((j<12 && j>8 && (i<6 || i>14)) || i<12 && i>8 &&(j<6 || j>14)){
@@ -245,6 +246,8 @@ function crearTablero(){
     }
     agregarSudoku()
 }
+
+
 
 function aleatorios(){      
     for(let i=0;i<40;i++){ 
