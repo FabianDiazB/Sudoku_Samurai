@@ -1,6 +1,8 @@
 var dimen = 9
 var sudoku = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
-
+var listaAbierta=[];
+var listaCerrada=[];
+var celdasBloqueadas=[];
 
 window.onload=function(){
     crearTablero();
@@ -149,7 +151,18 @@ function valido(num, fil, col) {
         return true;
         }
     }
-
+function listas(){
+    sudoku.forEach(fila => {
+        fila.forEach(c => {
+            if(c.value!=null && !celdasBloqueadas.includes(c) && !listaAbierta.includes(c)){ //si el nodo no ha sido explorado aun
+                listaAbierta.push(c);
+            }
+            if(c.value!==null && !celdasBloqueadas.includes(c) && !listaCerrada.includes(c)){
+                listaCerrada.push(c);
+            }
+        });
+    });
+}
 
 function resolverA() {
     // Definir los valores válidos para cada celda 
@@ -183,6 +196,9 @@ function resolverA() {
         const value = validos[i];
         if (valido( value,fil, col)) {
           // Asignar el valor a la celda
+          var gDeN = (fil+1)*21 + (col+1);
+          var hDeN = (21-fil+1) +(21-col+1);
+          console.log("El coste del nodo ",sudoku[fil][col], " es ",gDeN+hDeN );
           sudoku[fil][col].value = value;
           // Realizar la búsqueda recursiva
           if (busqueda()) {
@@ -210,7 +226,7 @@ function resolverBack(){
                     for(let k=1;k<10;k++){
                         if(valido(k,i,j)){
                             sudoku[i][j].value = k;
-                            if(resolverBack(sudoku)){
+                            if(resolverBack()){
                                 return true;
                             }else{
                                 sudoku[i][j].value = null;
