@@ -79,7 +79,6 @@ hr{
   font-family: 'Hiragino Kaku Gothic ProN', sans-serif; /* use a Japanese-inspired font */
   letter-spacing: 1px; /* add extra space between letters to mimic calligraphy */
   text-shadow: 1px 1px 0 #888888; /* add a subtle shadow effect to the text */
-  background-image: url('ink_plain.jpg'); /* add a traditional Japanese pattern */
   background-repeat: no-repeat; /* repeat the pattern */
   background-size: auto;
 }

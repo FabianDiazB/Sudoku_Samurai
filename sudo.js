@@ -247,12 +247,10 @@ function resolverA() {
       for (let i = 0; i < validos.length; i++) {
         const value = validos[i];
         if (valido( value,fil, col)) {
-            console.log("ya vamos por la celda ",sudoku[fil][col].id);
-
           // Asignar el valor a la celda
           var gDeN = (fil+1)*21 + (col+1);
           var hDeN = (21-fil+1) +(21-col+1);
-          //console.log("El coste del nodo ",sudoku[fil][col].id, " es ",gDeN+hDeN );
+          console.log("El coste del nodo ",sudoku[fil][col].id, " es ",gDeN+hDeN );
           sudoku[fil][col].value = value;
           // Realizar la búsqueda recursiva
           if (busqueda()) {
@@ -275,24 +273,21 @@ function resolverA() {
   }
 
 function resolverBack(){
-    console.log("en backtrack");
     for(let i=0;i<21;i++){
         for(let j=0;j<21;j++){
-            if((j<12 && j>8 && (i<6 || i>14)) || i<12 && i>8 &&(j<6 || j>14)){
+            if(((j<12 && j>8) && (i<6 || i>14)) || ((i<12 && i>8) &&(j<6 || j>14))){
                 continue;
             }else{
                 if(sudoku[i][j].value==0){
                     for(let k=1;k<10;k++){
                         if(valido(k,i,j)){
                             sudoku[i][j].value = k;
-
-                            if(resolverBack()){
+                            if(resolverBack(sudoku)){
                                 return true;
                             }else{
                                 sudoku[i][j].value = null;
                             }
                         }
-                        console.log("el valor ",k," no es valido");
                     }
                     return false;
                 }
