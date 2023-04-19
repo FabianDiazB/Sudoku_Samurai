@@ -205,7 +205,7 @@ function resolverA_Step() {
             return true;
           }
           // Si no se encontró solución, revertir la asignación
-          sudoku[fil][col].value = 0;
+          sudoku[fil][col].value = null;
         }
       }
       listas();
@@ -247,17 +247,19 @@ function resolverA() {
       for (let i = 0; i < validos.length; i++) {
         const value = validos[i];
         if (valido( value,fil, col)) {
+            console.log("ya vamos por la celda ",sudoku[fil][col].id);
+
           // Asignar el valor a la celda
           var gDeN = (fil+1)*21 + (col+1);
           var hDeN = (21-fil+1) +(21-col+1);
-          console.log("El coste del nodo ",sudoku[fil][col].id, " es ",gDeN+hDeN );
+          //console.log("El coste del nodo ",sudoku[fil][col].id, " es ",gDeN+hDeN );
           sudoku[fil][col].value = value;
           // Realizar la búsqueda recursiva
           if (busqueda()) {
             return true;
           }
           // Si no se encontró solución, revertir la asignación
-          sudoku[fil][col].value = 0;
+          sudoku[fil][col].value = null;
         }
       }
       listas();
@@ -283,12 +285,14 @@ function resolverBack(){
                     for(let k=1;k<10;k++){
                         if(valido(k,i,j)){
                             sudoku[i][j].value = k;
+
                             if(resolverBack()){
                                 return true;
                             }else{
                                 sudoku[i][j].value = null;
                             }
                         }
+                        console.log("el valor ",k," no es valido");
                     }
                     return false;
                 }
