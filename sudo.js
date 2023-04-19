@@ -1,13 +1,26 @@
+/**
+ * Codigo de js para hacer funcional y crear el tablero de sudoku samurai
+ * 
+ */
+
+
 var dimen = 9
-var sudoku = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+var sudoku = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]] // esta es la matriz 21x21 para representar los 5 tableros
 
 
-window.onload=function(){
+window.onload=function(){ 
+    /**
+     * Cuando cargue la ventana, se crea el tablero y los botones
+     */
     crearTablero();
     establecerBoton();
 }
 
 function establecerBoton(){
+    /**
+     * Esta funcion lo que hace es obtener los botones ya especificados en el html y ponerles el evento addListener para que cada uno
+     * ejecuta su respectiva funcion
+     */
 
     var botonG = document.getElementById("generar");
     botonG.addEventListener("click", gen);
@@ -31,14 +44,20 @@ function establecerBoton(){
 
 
 function gen(){
+    /**
+     * Esta funcion es para el boton Generar, utiliza limpiar y aleatorios para generar un nuevo tablero de manera aleatoria
+     */
     limpiar()
     aleatorios()
 }
 
 function limpiar(){
-    for (let i = 0; i<21;i++){
+    /**
+     * Limpiar recorre las 81 celdas y limpia su contenido, esto para que el tablero quede totalmente limpio
+     */
+    for (let i = 0; i<21;i++){ //2 ciclos para filas y columnas
         for(let j = 0; j<21;j++){
-            if((j<12 && j>8 && (i<6 || i>14)) || i<12 && i>8 &&(j<6 || j>14)){
+            if((j<12 && j>8 && (i<6 || i>14)) || i<12 && i>8 &&(j<6 || j>14)){ //casillas desactivadas
                 continue;
             }else{
             sudoku[i][j].value=null;}
@@ -47,12 +66,17 @@ function limpiar(){
 }
 
   function valido(num, fil, col) {
+    /**
+     * Funcion corazón que devuelve true o false, dependiendo si se puede insertar un numero en cierta celda, verificando en fila, columna y cuadrante
+     */
+
     // Verifica el cuadrante de 3x3
-    const filaIni = Math.floor(fil / 3) * 3;
+    const filaIni = Math.floor(fil / 3) * 3; 
     const columIni = Math.floor(col / 3) * 3;
-    for (let i = 0; i < 3; i++) {
+
+    for (let i = 0; i < 3; i++) { //esto verifica que el numero no se encuentre ya en el subcuadrante
         for (let j = 0; j < 3; j++) {
-            if (sudoku[filaIni + i][columIni + j].value == num) {
+            if (sudoku[filaIni + i][columIni + j].value == num) { //no seria valido el numero ahi
                 return false;
             }
         }
@@ -60,7 +84,7 @@ function limpiar(){
     //cuadrantes compartidos
     if(fil<9 && col<9){//sudoku A
         if((fil>5 && col>5)){//3x3 compartido entre (superior izquierdo) y (central)
-            for (let i = 0; i < 9; i++) {
+            for (let i = 0; i < 9; i++) { //con este for revisamos todas las celdas compartidas con el sudoku de en medio y asi saber si se puede insertar
                 if(sudoku[fil][i+6].value == num ||
                     sudoku[i+6][col].value == num ||
                     sudoku[fil][i].value == num || 
@@ -70,7 +94,7 @@ function limpiar(){
             }
         }
         else{
-            for (let i = 0; i < 9; i++) {
+            for (let i = 0; i < 9; i++) { 
                 if(sudoku[fil][i].value == num || sudoku[i][col].value == num){
                     return false
                 }
@@ -80,7 +104,7 @@ function limpiar(){
     ////////////////////////
     if(fil<9 && col>11){//sudoku B
         if((fil>5 && col>5)){
-            for (let i = 0; i < 9; i++) {
+            for (let i = 0; i < 9; i++) {//con este for revisamos todas las celdas compartidas con el sudoku de en medio y asi saber si se puede insertar
                 if(sudoku[fil][i+12].value == num || 
                     sudoku[i+6][col].value == num||
                     sudoku[fil][14-i].value == num || 
@@ -98,7 +122,7 @@ function limpiar(){
         }
     }
     if(fil>11 && col<9){//sudoku C
-        for (let i = 0; i < 9; i++) {
+        for (let i = 0; i < 9; i++) {//con este for revisamos todas las celdas compartidas con el sudoku de en medio y asi saber si se puede insertar
             if(sudoku[fil][i].value == num || 
                 sudoku[i+12][col].value == num||
                 sudoku[fil][i+6].value == num || 
@@ -115,7 +139,7 @@ function limpiar(){
         }
     }
     if(fil>11 && col>11){//sudoku D
-        for (let i = 0; i < 9; i++) {
+        for (let i = 0; i < 9; i++) {//con este for revisamos todas las celdas compartidas con el sudoku de en medio y asi saber si se puede insertar
             if(sudoku[fil][i+12].value == num || 
                 sudoku[i+12][col].value == num||
                 sudoku[fil][14-i].value == num || 
